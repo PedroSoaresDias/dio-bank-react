@@ -17,7 +17,6 @@ function Conta() {
   const [userData, setUserData] = useState<null | UserData>(null);
 
   const { isLoggedIn } = useContext(AppContext);
-  console.log("Retorno da página conta", isLoggedIn);
 
   const { id } = useParams();
   const navigate = useNavigate();
