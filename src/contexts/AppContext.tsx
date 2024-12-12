@@ -1,8 +1,7 @@
-import { getAllLocalStorage } from "../services/storage";
+import { getLocalStorage } from "../services/storage";
 import { createContext, useEffect, useState } from "react";
 
 interface IAppContext {
-  user: string;
   isLoggedIn: boolean;
   setIsLoggedIn: (isLoggedIn: boolean) => void;
 }
@@ -12,7 +11,7 @@ export const AppContext = createContext({} as IAppContext);
 export const AppContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
-  const storage = getAllLocalStorage();
+  const storage = getLocalStorage();
 
   useEffect(() => {
     if (storage) {
@@ -21,10 +20,8 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
     }
   }, [storage])
 
-  const user = 'Pedro';
-
   return (
-    <AppContext.Provider value={{ user, isLoggedIn, setIsLoggedIn }}>
+    <AppContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
       {children}
     </AppContext.Provider>
   )

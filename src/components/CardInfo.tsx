@@ -6,7 +6,7 @@ interface ICardInfo {
   content: string;
 }
 
-export default function CardInfo({ mainContent, content }: ICardInfo) {
+function CardInfo({ mainContent, content }: ICardInfo) {
   return (
     <Box
       minHeight={"120px"}
@@ -20,3 +20,5 @@ export default function CardInfo({ mainContent, content }: ICardInfo) {
     </Box>
   )
 }
+
+export default React.memo(CardInfo);

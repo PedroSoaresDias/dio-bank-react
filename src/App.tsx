@@ -5,22 +5,26 @@ import { BrowserRouter } from 'react-router-dom'
 import { Provider } from './components/ui/provider';
 import Layout from './components/Layout';
 // import ContaInfo from './pages/ContaInfo';
-import { AppContextProvider } from './components/AppContext';
+import { AppContextProvider } from './contexts/AppContext';
 import MainRoutes from './routes';
-import { createLocalStorage, getAllLocalStorage } from './services/storage';
+import { createLocalStorage, createLoginLocalStorage, getLocalStorage, getLoginLocalStorage } from './services/storage';
+import { LoginContextProvider } from './contexts/LoginContext';
 
 function App() {
 
-  !getAllLocalStorage() && createLocalStorage()
+  !getLocalStorage() && createLocalStorage();
+  !getLoginLocalStorage() && createLoginLocalStorage();
 
   return (
     <BrowserRouter>
       <AppContextProvider>
-        <Provider>
-          <Layout>
-            <MainRoutes />
-          </Layout>
-        </Provider>
+        <LoginContextProvider>
+          <Provider>
+            <Layout>
+              <MainRoutes />
+            </Layout>
+          </Provider>
+        </LoginContextProvider>
       </AppContextProvider>
     </BrowserRouter>
   );

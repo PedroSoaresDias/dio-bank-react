@@ -1,18 +1,22 @@
 import React, { useContext } from 'react'
 import { Button, Flex, Text } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
-import { AppContext } from './AppContext'
-import { changeLocalStorage } from '../services/storage'
+import { AppContext } from '../contexts/AppContext'
+import { changeLocalStorage, changeLoginLocalStorage } from '../services/storage'
+import { LoginContext } from '../contexts/LoginContext'
 
 export default React.memo(function Header() {
   const { setIsLoggedIn, isLoggedIn } = useContext(AppContext);
-  const navigate = useNavigate();
+  const { setEmail, setPassword } = useContext(LoginContext);
 
-  console.log("Retorno do Header", isLoggedIn)
+  const navigate = useNavigate();
 
   const logout = () => {
     changeLocalStorage({ login: false });
+    changeLoginLocalStorage({ email: "", password: "" });
     setIsLoggedIn(false)
+    setEmail("");
+    setPassword("");
     navigate("/")
   }
 
@@ -22,8 +26,6 @@ export default React.memo(function Header() {
         <Text fontSize={20} fontWeight={600} fontFamily={"monospace"}>DIO Bank</Text>
         <nav>
           <Flex justifyContent={"center"} gapX={8} paddingRight={8}>
-            {/* <Link to={"/"}>Home</Link>
-            <Link to={"/conta"}>Conta</Link> */}
             {
               isLoggedIn && (
                 <>
@@ -37,7 +39,6 @@ export default React.memo(function Header() {
                 </>
               )
             }
-
           </Flex>
         </nav>
       </Flex>

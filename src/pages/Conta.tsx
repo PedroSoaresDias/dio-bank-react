@@ -3,7 +3,7 @@ import { Center, SimpleGrid, Spinner } from '@chakra-ui/react';
 import CardInfo from '../components/CardInfo';
 import { api } from '../api';
 import { useParams, useNavigate } from 'react-router-dom';
-import { AppContext } from '../components/AppContext';
+import { AppContext } from '../contexts/AppContext';
 
 interface UserData {
   id: string;
@@ -13,7 +13,7 @@ interface UserData {
   balance: number;
 }
 
-export default function Conta() {
+function Conta() {
   const [userData, setUserData] = useState<null | UserData>(null);
 
   const { isLoggedIn } = useContext(AppContext);
@@ -21,7 +21,7 @@ export default function Conta() {
 
   const { id } = useParams();
   const navigate = useNavigate();
-  
+
   !isLoggedIn && navigate('/');
 
   useEffect(() => {
@@ -33,9 +33,7 @@ export default function Conta() {
     getData();
   }, [])
 
-  const actualDate = new Date();
-  // console.log(actualDate)
-
+  const actualDate = new Date().toLocaleDateString("pt-BR");
 
   if (userData && id !== userData?.id) {
     navigate("/");
@@ -50,11 +48,14 @@ export default function Conta() {
           </Center>
         ) : (
           <>
-            <CardInfo mainContent={`Bem vindo ${userData?.name}`} content={`${actualDate.getDay()}/${actualDate.getMonth()}/${actualDate.getFullYear()} ${actualDate.getHours()}:${actualDate.getMinutes()}`} />
-            <CardInfo mainContent="Saldo" content={`R$ ${userData?.balance}`} />
+            <CardInfo mainContent={`Bem vindo ${userData?.name}`} content={`Último acesso: ${actualDate}`} />
+            <CardInfo mainContent={`Informações básicas`} content={`Email: ${userData?.email}`} />
+            <CardInfo mainContent={"Saldo"} content={`R$ ${userData?.balance}`} />
           </>
         )}
       </SimpleGrid>
     </Center>
   )
 }
+
+export default React.memo(Conta);
