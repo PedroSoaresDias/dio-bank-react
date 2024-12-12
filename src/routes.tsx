@@ -9,7 +9,7 @@ const MainRoutes = () => {
 
   return (
     <Routes>
-      <Route path='/' element={ !isLoggedIn ? <Home /> : <Conta /> } />
+      <Route path='/' element={<Home />} />
       <Route path='/conta/:id' element={ isLoggedIn ? <Conta /> : <Home /> } />
     </Routes>
   )
