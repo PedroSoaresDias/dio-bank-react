@@ -1,25 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter } from 'react-router-dom'
+// import Home from './pages/Home';
+// import Conta from './pages/Conta';
+import { Provider } from './components/ui/provider';
+import Layout from './components/Layout';
+// import ContaInfo from './pages/ContaInfo';
+import { AppContextProvider } from './components/AppContext';
+import MainRoutes from './routes';
+import { createLocalStorage, getAllLocalStorage } from './services/storage';
 
 function App() {
+
+  !getAllLocalStorage() && createLocalStorage()
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <AppContextProvider>
+        <Provider>
+          <Layout>
+            <MainRoutes />
+          </Layout>
+        </Provider>
+      </AppContextProvider>
+    </BrowserRouter>
   );
 }
 
